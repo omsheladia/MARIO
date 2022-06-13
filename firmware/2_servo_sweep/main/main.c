@@ -44,6 +44,11 @@ static void mcpwm_servo_control(void *arg)
 			set_angle_servo(&servo_a, i);
 			set_angle_servo(&servo_b, i);
 			set_angle_servo(&servo_c, i);
+#ifdef CONFIG_ENABLE_OLED
+        // Diplaying servo angles on OLED 
+
+        display_servo_sweep(int i, &oled_config);
+#endif			
         	vTaskDelay(5);   
     	}
     	
@@ -52,6 +57,11 @@ static void mcpwm_servo_control(void *arg)
 			set_angle_servo(&servo_a, i);
 			set_angle_servo(&servo_b, i);
 			set_angle_servo(&servo_c, i);
+#ifdef CONFIG_ENABLE_OLED
+        // Diplaying servo angles on OLED 
+
+        display_servo_sweep(int i, &oled_config);
+#endif			
         	vTaskDelay(5);    
     	}
           

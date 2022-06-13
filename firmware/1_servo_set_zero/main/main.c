@@ -1,5 +1,6 @@
 #include "servo.h"
 #include "freertos/task.h"
+#include "sra_board.h"
 
 #define TAG "MCPWM_SERVO_CONTROL"
 
@@ -36,6 +37,13 @@ servo_config servo_c = {
 static void mcpwm_servo_control(void *arg)
 {
 	enable_servo();
+#ifdef CONFIG_ENABLE_OLED
+    // Declaring the required OLED struct
+    u8g2_t oled_config;
+
+    // Initialising the OLED
+    ESP_ERROR_CHECK(init_oled(&oled_config));
+#endif
 
     while(1)
     {	
@@ -46,7 +54,12 @@ static void mcpwm_servo_control(void *arg)
 	vTaskDelay(100);
 	set_angle_servo(&servo_c,0);
 	vTaskDelay(100);
-          
+
+	ESP_LOGI("debug", "s_a: %d ::  s_b: %d  :: s_c: %d",0,0,0);
+#ifdef CONFIG_ENABLE_OLED
+        // Diplaying servo angles on OLED 
+        display_servo_set_zero(&oled_config);
+#endif      
     }
 }
 
